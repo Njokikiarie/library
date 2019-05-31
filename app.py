@@ -111,13 +111,13 @@ def addbooks():  # logic goes her
 def search():
     if request.method == 'POST':
 
-        general = request.form['general']
+        title = request.form['title']
 
         con = pymysql.connect("localhost", "root", "", "library")
         cursor = con.cursor()
 
-        sql = "SELECT * FROM books WHERE title like '%%s%' or author= %s ORDER BY  `id` DESC "
-        cursor.execute(sql, (general, general))
+        sql = "SELECT * FROM `books` WHERE `title` LIKE  '%%%s%%' "
+        cursor.execute(sql, (title))
 
         #check if cursor has zero rows
         if cursor.rowcount == 0:
