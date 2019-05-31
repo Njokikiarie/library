@@ -1,168 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>books</title>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css">
     <!-- adding animate and font awesome and a  few js files to add animation to a page-->
-     <link rel="stylesheet" href="../static/bootstrap/css/font-awesome.css">
+    <link rel="stylesheet" href="../static/bootstrap/css/font-awesome.css">
     <link rel="stylesheet" href="../static/bootstrap/css/animate.css">
-
-
     <!-- LINK TO BOOTSTRAP JS, JAVASCRIPTS ADDS TO THE INTERACTIVITY OF A PAGE-->
-     <SCRIPT SRC="../static/bootstrap/js/jquery.js"></SCRIPT>
-    <script src="../static/bootstrap/js/bootstrap.js"></script>
-    <script src="../static/bootstrap/js/parallax.min.js"></script>
-<script src="../static/bootstrap/js/wow.min.js"></script>
-<script src="../static/bootstrap/js/jquery.easing.min.js"></script>
-<script src="../static/bootstrap/js/fliplightbox.min.js"></script>
-<script src="../static/bootstrap/js/functions.js"></script>
+ 
     <style type="text/css">
-        section{
-        padding: 10%;
-        background-image: url("../static/images/login2.jpeg");
-        background-repeat: no-repeat;
-        background-size: cover;
-        text-align: center;
-        background-attachment: fixed;
-    }
+        section {
+            padding: 10%;
+            background-image: url("../static/images/login2.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            text-align: center;
+            background-attachment: fixed;
+        }
     </style>
 
 </head>
+
 <body>
-<nav class="navbar navbar-expand-md bg-light navbar-light sticky-top">
-    <h1 class="navbar-nav text-warning" >Arieh eLibrary</h1>
-    <button class="navbar-toggler" data-target = "#mynav" data-toggle="collapse"> <!-- hides the button on a big screen-->
+    <nav class="navbar navbar-expand-md bg-light navbar-light sticky-top">
+        <h1 class="navbar-nav text-warning">Arieh eLibrary</h1>
+        <button class="navbar-toggler" data-target="#mynav" data-toggle="collapse"> <!-- hides the button on a big screen-->
         <span CLASS="navbar-toggler-icon"> </span></button>
-     <div class=" collapse navbar-collapse" id="mynav"> <!-- hides the menu items when on a smaller screen-->
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a href="/" class="nav-link">home</a></li>
-        <li class="nav-item"><a href="/books" class="nav-link">books</a></li>
-        <li class="nav-item"><a href="" class="nav-link">portfolio</a></li>
-         <li class="nav-item"><a href="" class="nav-link">team</a></li>
-        <div class="dropdown">
-  <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    My Account
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <a class="dropdown-item" href="/login">sign in</a>
-    <a class="dropdown-item" href="/logout">sign out</a>
-  </div>
-</div>
-    </ul>
-    </div>
-</nav>
-{% if session['userkey'] %}
-<h5 class="text-right">
-    <b>welcome:{{ session['userkey'] }}</b>
-
-</h5>
-
-
-<header class=" text-warning ">
-<h1 class="text-center">Books Available</h1>
-
-</header>
-<section class="row" >
-    <div class="col-md-2" >
-
-
-        <br>
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add a book</button>
-        <BR>
-        <BR>
-        <form  action="/search" method="post"  class="text-right">
-            <input  type="text" name="general"  placeholder="enter title">
-
-            <input type="submit" class="btn btn-dark btn-sm" value="search">
-
-        </form>
-
-
-   <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-
-          <h4 class="modal-title text-center text-success">Share a Book</h4>
-             <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class=" collapse navbar-collapse" id="mynav">
+            <!-- hides the menu items when on a smaller screen-->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a href="/" class="nav-link">home</a></li>
+                <li class="nav-item"><a href="/books" class="nav-link">books</a></li>
+                <li class="nav-item"><a href="" class="nav-link">portfolio</a></li>
+                <li class="nav-item"><a href="" class="nav-link">team</a></li>
+                <div class="dropdown">
+                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <a class="dropdown-item" href="/login">sign in</a>
+                        <a class="dropdown-item" href="/logout">sign out</a>
+                    </div>
+                </div>
+            </ul>
         </div>
-        <div class="modal-body">
-            <form action="/addbooks" method="post" enctype="multipart/form-data">
-                <div class="form-group"><label>Genre:</label>
+    </nav>
+    {% if session['userkey'] %}
+    <h5 class="text-right">
+        <b>welcome:{{ session['userkey'] }}</b>
 
-        <input type="radio" name="genre" value="fiction"><label>fiction</label>
-         <input type="radio" name="genre" value="programming"><label>programmimg</label>
-         <input type="radio" name="genre"><label>short story</label>
-         <input type="radio" name="genre" value="horror"><label>horror</label>
-         <input type="radio" name="genre"><label>self help</label>
+    </h5>
+    <header class=" text-warning ">
+        <h1 class="text-center">Books Available</h1>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 float-left">
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add a book</button>
+                </div>
+                <div class="col-md-6 float-right">
+                  <!--  <form action="/search" method="post" class="text-right">
+                        <div class="form-group">
+                        <input type="text" class="form-control" name="title" placeholder="enter title">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>-->
+        <form action="/search" method="post" class="text-right">
+          <div class="input-group mb-3">        
+            <input
+              type="text"
+              class="form-control"
+              name="title"
+              value=""
+              placeholder="Search book" required>
+            <div class="input-group-append">
+              <button class="btn btn-info" type="submit">
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
 
 
                 </div>
+            </div>
+                <div class="row">
 
-           <div class="form-group"><label>Book Title:</label><input type="text" name="title"  class="form-control"></div>
-                <div class="form-group"><label>Author:</label><input type="text" name="author"   class="form-control"></div>
-   <div class="form-group"><label>Description:</label><textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea></div>
-                <div class="form-group"><label>Add Book:</label><input type="file" name="file"   class="form-control"></div>
-     <div class="form-group"><input type="submit" class=" btn btn-success" value="Add"></div>
-            </form>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+                    <div class="col-md-12 d-flex justify-content-center ">
+                        <h5 class="text-danger text-center">{{ msg }}</h5>
+                        <form action="/books">
+
+
+
+
+                            <table border="0" class="table bg-light table-bordered table-striped ">
+                                <thead class="thead-dark">
+
+
+                                    <tr>
+                                        <th>Genre</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>Description</th>
+                                        <th>book</th>
+                                        <th>Download link</th>
+                                    </tr>
+                                </thead>
+
+                                {% for row in rows %}
+                                <tr>
+                                    <td>{{ row[5] }}</td>
+                                    <td>{{ row[1] }}</td>
+                                    <td>{{ row[2] }}</td>
+                                    <td>{{ row[3] }}</td>
+                                    <td>{{ row[4] }}</td>
+                                    <td><a href="../static/uploads/{{ row[4] }}" download="file">Download</a></td>
+
+
+                                </tr>
+                                {% endfor %}
+                            </table>
+                            <hr>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+    </section>
+    {% endif %}
+
+
+    <!--add book modal-->
+
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title text-center text-success">Share a Book</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="/addbooks" method="post" enctype="multipart/form-data">
+                        <div class="form-group"><label>Genre:</label>
+
+                            <input type="radio" name="genre" value="fiction"><label>fiction</label>
+                            <input type="radio" name="genre" value="programming"><label>programmimg</label>
+                            <input type="radio" name="genre"><label>short story</label>
+                            <input type="radio" name="genre" value="horror"><label>horror</label>
+                            <input type="radio" name="genre"><label>self help</label>
+
+
+                        </div>
+
+                        <div class="form-group"><label>Book Title:</label><input type="text" name="title" class="form-control"></div>
+                        <div class="form-group"><label>Author:</label><input type="text" name="author" class="form-control"></div>
+                        <div class="form-group"><label>Description:</label><textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea></div>
+                        <div class="form-group"><label>Add Book:</label><input type="file" name="file" class="form-control"></div>
+                        <div class="form-group"><input type="submit" class=" btn btn-success" value="Add"></div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      </div>
     </div>
-   </div>
-
-    </div>
-    <div class="col-md-8 " >
-        <h5 class="text-danger text-center">{{ msg }}</h5>
-        <form action="/books">
-
-
-
-
-            <table border="0" class="table bg-light table-borderless " >
-            <thead class="thead-dark">
-
-
-            <tr>
-                <th>Genre</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Description</th>
-                <th>book</th>
-
-
-                <th>Download link</th>
-            </tr>
-            </thead>
-
-
-            {% for row in rows %}
-                <tr>
-
-                <td>{{ row[5] }}</td>
-                <td>{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-                    <td>{{ row[4] }}</td>
-                    <td><a href="../static/uploads">{{ row[3] }}</a></td>
-                    <td><a href="../static/uploads" download="file">Download</a></td>
-
-
-                </tr>
-            {% endfor %}
-            </table>
-                <hr>
-        </form>
-    </div>
-<div class="col-md-2"></div>
-
-
-
-</section>
-{% endif %}
+    <!--Javascript-->
+    <script SRC="../static/bootstrap/js/jquery.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.js"></script>
+    <script src="../static/bootstrap/js/parallax.min.js"></script>
+    <script src="../static/bootstrap/js/wow.min.js"></script>
+    <script src="../static/bootstrap/js/jquery.easing.min.js"></script>
+    <script src="../static/bootstrap/js/fliplightbox.min.js"></script>
+    <script src="../static/bootstrap/js/functions.js"></script>
 </body>
+
 </html>
